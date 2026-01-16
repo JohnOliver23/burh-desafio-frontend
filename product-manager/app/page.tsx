@@ -9,6 +9,7 @@ import { ProductList } from "@/components/produtct/product-list";
 
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AddProductModal } from "@/components/produtct/add-product-modal";
 
 export default function HomePage() {
   const {
@@ -19,6 +20,11 @@ export default function HomePage() {
     handleOpenAddModal,
     handleEdit,
     handleDelete,
+
+    isAddModalOpen,
+    handleCloseAddModal,
+    handleCreate,
+    isCreating,
   } = useHomePage();
 
   return (
@@ -62,6 +68,12 @@ export default function HomePage() {
           onDelete={handleDelete}
         />
       </main>
+      <AddProductModal
+        open={isAddModalOpen}
+        onOpenChange={(open) => !open && handleCloseAddModal()}
+        onSave={handleCreate}
+        isLoading={isCreating}
+      />
     </div>
   );
 }
