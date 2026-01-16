@@ -51,14 +51,22 @@ export function ProductForm({
         <FormField
           control={form.control}
           name="name"
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <FormItem>
-              <FormLabel>Nome do Produto</FormLabel>
+              <FormLabel className={fieldState.error && "text-red-500"}>
+                Nome do Produto
+              </FormLabel>
               <FormControl>
-                <Input placeholder="Ex: Notebook Dell Inspiron" {...field} />
+                <Input
+                  className={
+                    fieldState.error &&
+                    "border-red-500 focus-visible:ring-transparent"
+                  }
+                  placeholder="Ex: Notebook Dell Inspiron"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>Nome que identifica o produto.</FormDescription>
-              <FormMessage />
+              <FormMessage className="text-red-500" />
             </FormItem>
           )}
         />
@@ -66,31 +74,36 @@ export function ProductForm({
         <FormField
           control={form.control}
           name="description"
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <FormItem>
-              <FormLabel>Descrição</FormLabel>
+              <FormLabel className={fieldState.error && "text-red-500"}>
+                Descrição
+              </FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Descreva as características do produto..."
-                  className="min-h-[100px] resize-none"
+                  className={`min-h-[100px] resize-none ${
+                    fieldState.error &&
+                    "border-red-500 focus-visible:ring-transparent"
+                  }`}
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
-                Detalhes e especificações do produto.
-              </FormDescription>
-              <FormMessage />
+
+              <FormMessage className="text-red-500" />
             </FormItem>
           )}
         />
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-1">
           <FormField
             control={form.control}
             name="price"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
-                <FormLabel>Preço (R$)</FormLabel>
+                <FormLabel className={fieldState.error && "text-red-500"}>
+                  Preço (R$)
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -101,10 +114,14 @@ export function ProductForm({
                     onChange={(e) =>
                       field.onChange(Number.parseFloat(e.target.value) || 0)
                     }
+                    className={
+                      fieldState.error &&
+                      "border-red-500 focus-visible:ring-transparent"
+                    }
                   />
                 </FormControl>
-                <FormDescription>Valor unitário do produto.</FormDescription>
-                <FormMessage />
+
+                <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
@@ -112,9 +129,11 @@ export function ProductForm({
           <FormField
             control={form.control}
             name="quantity"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
-                <FormLabel>Quantidade em Estoque</FormLabel>
+                <FormLabel className={fieldState.error && "text-red-500"}>
+                  Quantidade em Estoque
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -124,16 +143,19 @@ export function ProductForm({
                     onChange={(e) =>
                       field.onChange(Number.parseInt(e.target.value) || 0)
                     }
+                    className={
+                      fieldState.error &&
+                      "border-red-500 focus-visible:ring-transparent"
+                    }
                   />
                 </FormControl>
-                <FormDescription>Unidades disponíveis.</FormDescription>
-                <FormMessage />
+                <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-1">
           <FormField
             control={form.control}
             name="createdAt"
@@ -159,7 +181,10 @@ export function ProductForm({
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                  <PopoverContent
+                    className="z-[100] w-auto p-0 bg-background border border-border"
+                    align="start"
+                  >
                     <Calendar
                       mode="single"
                       selected={field.value ? new Date(field.value) : undefined}
@@ -182,32 +207,37 @@ export function ProductForm({
           <FormField
             control={form.control}
             name="available"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Disponibilidade</FormLabel>
-                <div className="flex items-center gap-3 rounded-md border p-3">
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <span className="text-sm text-muted-foreground">
-                    {field.value
-                      ? "Produto disponível para venda"
-                      : "Produto indisponível"}
-                  </span>
-                </div>
-                <FormDescription>
-                  Status de disponibilidade do produto.
-                </FormDescription>
+                <FormLabel className={fieldState.error && "text-red-500"}>
+                  Disponibilidade
+                </FormLabel>
+
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="bg-green-900"
+                  />
+                </FormControl>
+                <span className="text-sm text-muted-foreground">
+                  {field.value
+                    ? "Produto disponível para venda"
+                    : "Produto indisponível"}
+                </span>
+
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
+        <Button
+          variant={"outline"}
+          type="submit"
+          className="w-full cursor-pointer"
+          disabled={isLoading}
+        >
           {isLoading ? "Salvando..." : submitLabel}
         </Button>
       </form>
