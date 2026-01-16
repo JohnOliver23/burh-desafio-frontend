@@ -2,7 +2,8 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL:
-    process.env.NEXT_PUBLIC_API_URL || "https://crudcrud.com/api/YOUR_API_KEY",
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://crudcrud.com/api/9c1ed5d8e6c7490c9b0d982c82743d81",
   headers: {
     "Content-Type": "application/json",
   },
