@@ -34,7 +34,7 @@ const formatCurrency = (value: number) => {
 
 export function ProductCard({ product, onEdit, onDelete }: ProductCardProps) {
   return (
-    <Card className="flex flex-col transition-all duration-200 hover:shadow-lg hover:border-primary/20">
+    <Card className="flex flex-col min-w-[320px]  transition-all duration-200 hover:shadow-lg hover:border-primary/20">
       <CardHeader className="pb-4">
         <div className="flex flex-col">
           <div className="flex items-start justify-between gap-4">
