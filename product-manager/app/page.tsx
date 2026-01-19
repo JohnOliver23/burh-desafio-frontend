@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AddProductModal } from "@/components/produtct/add-product-modal";
 import { EditProductModal } from "@/components/produtct/edit-product-modal";
+import { DeleteProductDialog } from "@/components/produtct/delete-product-dialog";
 
 export default function HomePage() {
   const {
@@ -20,18 +21,22 @@ export default function HomePage() {
     error,
     handleOpenAddModal,
 
+    isAddModalOpen,
+    handleCloseAddModal,
+    handleCreate,
+    isCreating,
+
     editingProduct,
     handleEdit,
     handleSaveEdit,
     handleCloseEditModal,
     isEditing,
 
-    isAddModalOpen,
-    handleCloseAddModal,
-    handleCreate,
-    isCreating,
-
+    deletingProduct,
     handleDelete,
+    handleConfirmDelete,
+    handleCloseDeleteDialog,
+    isDeleting,
   } = useHomePage();
 
   return (
@@ -87,6 +92,13 @@ export default function HomePage() {
         onOpenChange={handleCloseEditModal}
         onSave={handleSaveEdit}
         isLoading={isEditing}
+      />
+      <DeleteProductDialog
+        product={deletingProduct}
+        open={!!deletingProduct}
+        onOpenChange={handleCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
+        isLoading={isDeleting}
       />
     </div>
   );

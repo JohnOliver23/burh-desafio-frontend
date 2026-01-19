@@ -75,6 +75,27 @@ export function useHomePage() {
     setDeletingProduct(product);
   };
 
+  const handleConfirmDelete = () => {
+    if (!deletingProduct) return;
+
+    deleteMutation.mutate(deletingProduct._id, {
+      onSuccess: () => {
+        setDeletingProduct(null);
+        toast.success("Produto excluído com sucesso!");
+      },
+      onError: (err) => {
+        toast.error("Erro ao excluir produto", {
+          description:
+            err instanceof Error ? err.message : "Tente novamente mais tarde.",
+        });
+      },
+    });
+  };
+
+  const handleCloseDeleteDialog = (open: boolean) => {
+    if (!open) setDeletingProduct(null);
+  };
+
   return {
     products,
     isLoading,
@@ -95,6 +116,8 @@ export function useHomePage() {
 
     deletingProduct,
     handleDelete,
+    handleConfirmDelete,
+    handleCloseDeleteDialog,
     isDeleting: deleteMutation.isPending,
   };
 }
