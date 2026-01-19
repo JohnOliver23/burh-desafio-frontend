@@ -45,6 +45,32 @@ export function useHomePage() {
     setEditingProduct(product);
   };
 
+  const handleSaveEdit = (data: ProductFormData) => {
+    if (!editingProduct) return;
+
+    updateMutation.mutate(
+      { id: editingProduct._id, data },
+      {
+        onSuccess: () => {
+          setEditingProduct(null);
+          toast.success("Produto atualizado com sucesso!");
+        },
+        onError: (err) => {
+          toast.error("Erro ao atualizar produto", {
+            description:
+              err instanceof Error
+                ? err.message
+                : "Tente novamente mais tarde.",
+          });
+        },
+      }
+    );
+  };
+
+  const handleCloseEditModal = (open: boolean) => {
+    if (!open) setEditingProduct(null);
+  };
+
   const handleDelete = (product: Product) => {
     setDeletingProduct(product);
   };
@@ -63,7 +89,8 @@ export function useHomePage() {
 
     editingProduct,
     handleEdit,
-
+    handleSaveEdit,
+    handleCloseEditModal,
     isEditing: updateMutation.isPending,
 
     deletingProduct,
